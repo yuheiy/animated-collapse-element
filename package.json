@@ -1,0 +1,11 @@
+{
+  "name": "@yuheiy/animated-collapse-element",
+  "version": "0.0.1",
+  "main": "animated-collapse-element.js",
+  "repository": "https://github.com/yuheiy/animated-collapse-element.git",
+  "author": "Yuhei Yasuda <yuhei.yasuda1003@gmail.com> (https://yuheiy.com/)",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}

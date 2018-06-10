@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>&lt;animated-collapse&gt; element</title>
+  <style>
+    :root {
+      --color-blue-800: #1565C0;
+      --color-blue-900: #0d47a1;
+      --color-gray-100: #fafafa;
+      --color-gray-200: #eee;
+      --color-gray-300: #e0e0e0;
+      --color-gray-400: #bdbdbd;
+      --color-white: #fff;
+
+      --font-stack-system-ui: system-ui, sans-serif;
+      --font-stack-monospace: "Menlo", "Consolas", monospace;
+
+      --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+      --focus-ring-width: 3px;
+      --focus-ring-color: var(--color-blue-800);
+      --focus-ring-duration: .2s;
+    }
+
+    html {
+      font-family: var(--font-stack-system-ui);
+      line-height: 1.5;
+    }
+
+    body {
+      max-width: 40rem;
+      margin: 0 auto;
+      padding-right: 1rem;
+      padding-left: 1rem;
+      color: hsla(0, 0%, 0%, .87);
+      background-color: var(--color-gray-100);
+    }
+
+    :focus {
+      outline: var(--focus-ring-width) solid var(--focus-ring-color);
+      outline-offset: 3px;
+      transition: outline var(--focus-ring-duration) var(--easing-standard);
+    }
+
+    h1,
+    h2 {
+      line-height: 1.25;
+    }
+
+    p {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    address {
+      font-style: inherit;
+    }
+
+    pre {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      overflow: auto;
+      font-family: var(--font-stack-monospace);
+    }
+
+    a {
+      color: var(--color-blue-900);
+      text-decoration-color: hsla(216, 85%, 34%, .6); /* --color-blue-900 */
+      text-underline-position: under;
+    }
+
+    code {
+      font-family: var(--font-stack-monospace);
+      font-size: .875em;
+    }
+
+    body > header h1 {
+      margin-top: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    body > header h1 code {
+      font-size: inherit;
+    }
+
+    body > footer p {
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+      text-align: center;
+    }
+
+    .collapsible-heading {
+      margin-top: 3rem;
+      margin-bottom: .5rem;
+    }
+
+    .collapsible-toggle {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: .25rem 1.25rem;
+      font: inherit;
+      box-shadow: 0 1px 1px 0 hsla(0, 0%, 0%, .2);
+      background-color: var(--color-gray-200);
+      border: 1px solid var(--color-gray-300);
+      border-radius: 2px;
+    }
+
+    .collapsible-toggle:focus {
+      box-shadow: 0 1px 1px 0 transparent, 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
+      outline: 0;
+      transition: box-shadow var(--focus-ring-duration) var(--easing-standard);
+    }
+
+    .collapsible-toggle:active {
+      background-color: var(--color-gray-300);
+      border-color: var(--color-gray-400);
+    }
+
+    .collapsible-collapse {
+      padding-right: 1.25rem;
+      padding-left: 1.25rem;
+      box-shadow: 0 1px 1px 0px hsla(0, 0%, 0%, .2);
+      background-color: var(--color-white);
+      border-radius: 2px;
+    }
+
+    .collapsible-collapse.-custom {
+      --animated-collapse-duration-expand: 1.6s;
+      --animated-collapse-duration-collapse: .8s;
+      --animated-collapse-easing-expand: cubic-bezier(0.860, 0.000, 0.070, 1.000);
+      --animated-collapse-easing-collapse: cubic-bezier(0.075, 0.820, 0.165, 1.000);
+    }
+
+    .collapsible-collapse > :first-child {
+      margin-top: 0;
+      padding-top: 1rem;
+    }
+
+    .collapsible-collapse > :last-child {
+      margin-bottom: 0;
+      padding-bottom: 1rem;
+    }
+  </style>
+  <script type="module">
+    import AnimatedCollapse from './animated-collapse-element.js'
+
+    customElements.define(AnimatedCollapse.is, AnimatedCollapse)
+
+    const log = document.querySelector('#events-log')
+
+    document.querySelectorAll('.collapsible').forEach((root) => {
+      const toggle = root.querySelector('.collapsible-toggle')
+      const collapse = root.querySelector('.collapsible-collapse')
+
+      toggle.addEventListener('click', () => {
+        collapse.expanded = !collapse.expanded
+        toggle.setAttribute('aria-expanded', collapse.expanded)
+      })
+
+      ;['expandstart', 'expandend', 'collapsestart', 'collapseend'].forEach((eventType) => {
+        collapse.addEventListener(eventType, () => {
+          log.innerHTML = `<code>${eventType}</code> event from "${toggle.textContent}" collapse`
+        })
+      })
+    })
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>
+      <code>&lt;animated-collapse&gt; element</code>
+    </h1>
+    <p>
+      <code>&lt;animated-collapse&gt;</code> element makes it easy and simple to collapse wrapped elements with animation.
+    </p>
+    <p>
+      This element is built with Web Components. It works only with browsers supporting Custom Elements and Shadow DOM.
+    </p>
+    <p>
+      <a href="https://github.com/yuheiy/animated-collapse-element">Fork me at GitHub</a>
+    </p>
+  </header>
+
+  <main>
+    <section class="collapsible">
+      <h2 class="collapsible-heading" id="usage">
+        <button class="collapsible-toggle" type="button" aria-expanded="false" aria-controls="usage-collapse">Basic usage</button>
+      </h2>
+      <animated-collapse id="usage-collapse" class="collapsible-collapse" aria-labelledby="usage">
+        <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+
+    &lt;style&gt;
+      /*
+       * Since &lt;animated-collapse&gt; uses "overflow: hidden" for
+       * its animation, margins do not collapse. So you should
+       * remove collapsible margins.
+       */
+      animated-collapse > p {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    &lt;/style&gt;
+
+    &lt;script type="module"&gt;
+      import AnimatedCollapse from 'https://yuheiy.github.io/animated-collapse/animated-collapse.js'
+      customElements.define(AnimatedCollapse.is, AnimatedCollapse)
+
+      toggle.onclick = () => {
+        // You can get the state and set from
+        // `AnimatedCollapse#expanded`
+        collapse.expanded = !collapse.expanded
+      }
+    &lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+    &lt;button id="toggle"&gt;content&lt;/button&gt;
+    &lt;animated-collapse id="collapse"&gt;
+      &lt;p&gt;Place your content here!&lt;/p&gt;
+    &lt;/animated-collapse&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </animated-collapse>
+    </section>
+
+    <section class="collapsible">
+      <h2 class="collapsible-heading" id="expanded">
+        <button class="collapsible-toggle" type="button" aria-expanded="false" aria-controls="expanded-collapse">
+          <code>expanded</code> attribute</button>
+      </h2>
+      <animated-collapse id="expanded-collapse" class="collapsible-collapse" aria-labelledby="expanded">
+        <p>You can also control collapsing state from
+          <code>expanded</code> attribute. If
+          <code>expanded</code> attribute is not specified, it is collapsed.</p>
+        <pre><code class="language-html">&lt;animated-collapse&gt;
+  &lt;p&gt;Place your content here!&lt;/p&gt;
+  &lt;p&gt;This element is collapsed by default.&lt;/p&gt;
+&lt;/animated-collapse&gt;</code></pre>
+        <p>If
+          <code>expanded</code> attribute is specified, it is expanded.</p>
+        <pre><code class="language-html">&lt;animated-collapse expanded&gt;
+  &lt;p&gt;Place your content here!&lt;/p&gt;
+  &lt;p&gt;This element is expanded by default.&lt;/p&gt;
+&lt;/animated-collapse&gt;</code></pre>
+      </animated-collapse>
+    </section>
+
+    <section class="collapsible">
+      <h2 class="collapsible-heading" id="transition">
+        <button class="collapsible-toggle" type="button" aria-expanded="false" aria-controls="transition-collapse">Custom transition</button>
+      </h2>
+      <animated-collapse id="transition-collapse" class="collapsible-collapse -custom" aria-labelledby="transition">
+        <p>The animation is built by CSS
+          <code>transition</code> property. You can pass custom values for
+          <code>transition</code> property as Custom properties.</p>
+        <pre><code class="language-css">animated-collapse {
+  --animated-collapse-duration-expand: 1.6s;
+  --animated-collapse-duration-collapse: .8s;
+  --animated-collapse-easing-expand: cubic-bezier(0.860, 0.000, 0.070, 1.000);
+  --animated-collapse-easing-collapse: cubic-bezier(0.075, 0.820, 0.165, 1.000);
+}</code></pre>
+      </animated-collapse>
+    </section>
+
+    <section class="collapsible">
+      <h2 class="collapsible-heading" id="events">
+        <button class="collapsible-toggle" type="button" aria-expanded="false" aria-controls="events-collapse">Collapse events</button>
+      </h2>
+      <animated-collapse id="events-collapse" class="collapsible-collapse" aria-labelledby="events">
+        <p>You can listen some events.
+          <code>&lt;animated-collapse&gt;</code> element dispatches the next
+          <code>CustomEvent</code>s.</p>
+        <pre><code class="language-javascript">const animatedCollapse = document.querySelector('animated-collapse')
+
+animatedCollapse.addEventListener(
+  'expandstart',
+  () => console.log('expanding is started')
+)
+animatedCollapse.addEventListener(
+  'expandend',
+  () => console.log('expanding is ended')
+)
+animatedCollapse.addEventListener(
+  'collapsestart',
+  () => console.log('collapsing is started')
+)
+animatedCollapse.addEventListener(
+  'collapseend',
+  () => console.log('collapsing is ended')
+)</code></pre>
+        <p>Received event:
+          <b id="events-log">initial</b>
+        </p>
+      </animated-collapse>
+    </section>
+  </main>
+
+  <footer>
+    <address>
+      <p>Made by
+        <a href="https://yuheiy.com/">Yuhei Yasuda</a>.</p>
+    </address>
+  </footer>
+</body>
+
+</html>
