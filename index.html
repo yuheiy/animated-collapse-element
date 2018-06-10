@@ -158,6 +158,11 @@
 
       toggle.addEventListener('click', () => {
         collapse.expanded = !collapse.expanded
+        if (collapse.expanded) {
+          collapse.removeAttribute('aria-hidden')
+        } else {
+          collapse.setAttribute('aria-hidden','true')
+        }
         toggle.setAttribute('aria-expanded', collapse.expanded)
       })
 
@@ -191,7 +196,7 @@
       <h2 class="collapsible-heading" id="usage">
         <button class="collapsible-toggle" type="button" aria-expanded="false" aria-controls="usage-collapse">Basic usage</button>
       </h2>
-      <animated-collapse id="usage-collapse" class="collapsible-collapse" aria-labelledby="usage">
+      <animated-collapse id="usage-collapse" class="collapsible-collapse" aria-labelledby="usage" aria-hidden="true">
         <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
@@ -236,7 +241,7 @@
         <button class="collapsible-toggle" type="button" aria-expanded="false" aria-controls="expanded-collapse">
           <code>expanded</code> attribute</button>
       </h2>
-      <animated-collapse id="expanded-collapse" class="collapsible-collapse" aria-labelledby="expanded">
+      <animated-collapse id="expanded-collapse" class="collapsible-collapse" aria-labelledby="expanded" aria-hidden="true">
         <p>You can also control collapsing state from
           <code>expanded</code> attribute. If
           <code>expanded</code> attribute is not specified, it is collapsed.</p>
@@ -257,7 +262,7 @@
       <h2 class="collapsible-heading" id="transition">
         <button class="collapsible-toggle" type="button" aria-expanded="false" aria-controls="transition-collapse">Custom transition</button>
       </h2>
-      <animated-collapse id="transition-collapse" class="collapsible-collapse -custom" aria-labelledby="transition">
+      <animated-collapse id="transition-collapse" class="collapsible-collapse -custom" aria-labelledby="transition" aria-hidden="true">
         <p>The animation is built by CSS
           <code>transition</code> property. You can pass custom values for
           <code>transition</code> property as Custom properties.</p>
@@ -274,7 +279,7 @@
       <h2 class="collapsible-heading" id="events">
         <button class="collapsible-toggle" type="button" aria-expanded="false" aria-controls="events-collapse">Collapse events</button>
       </h2>
-      <animated-collapse id="events-collapse" class="collapsible-collapse" aria-labelledby="events">
+      <animated-collapse id="events-collapse" class="collapsible-collapse" aria-labelledby="events" aria-hidden="true">
         <p>You can listen some events.
           <code>&lt;animated-collapse&gt;</code> element dispatches the next
           <code>CustomEvent</code>s.</p>

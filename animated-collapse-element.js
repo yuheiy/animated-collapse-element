@@ -44,7 +44,6 @@ export default class AnimatedCollapse extends HTMLElement {
       wrapperStyle.overflow = 'hidden'
       wrapperStyle.height = '0px'
       wrapperStyle.visibility = 'hidden'
-      wrapperEl.setAttribute('aria-hidden', 'true')
     }
 
     wrapperEl.addEventListener(
@@ -75,7 +74,6 @@ export default class AnimatedCollapse extends HTMLElement {
       'height' +
       ` var(--animated-collapse-duration-expand, ${DEFAULT_DURATION_EXPAND})` +
       ` var(--animated-collapse-easing-expand, ${DEFAULT_EASING_EXPAND})`
-    wrapperEl.removeAttribute('aria-hidden')
     this._state = 'expanding'
     this.dispatchEvent(new CustomEvent('expandstart'))
 
@@ -104,7 +102,6 @@ export default class AnimatedCollapse extends HTMLElement {
       ` var(--animated-collapse-easing-collapse, ${DEFAULT_EASING_COLLAPSE})`
     containerEl.offsetHeight // force layout
     wrapperStyle.height = '0px'
-    wrapperEl.setAttribute('aria-hidden', 'true')
     this._state = 'collapsing'
     this.dispatchEvent(new CustomEvent('collapsestart'))
 
