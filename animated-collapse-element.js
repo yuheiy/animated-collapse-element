@@ -96,8 +96,8 @@ export default class AnimatedCollapse extends HTMLElement {
     const wrapperEl = this.shadowRoot.querySelector('#wrapper')
     const containerEl = this.shadowRoot.querySelector('#container')
     const wrapperStyle = wrapperEl.style
-    wrapperStyle.maxHeight = `${containerEl.offsetHeight}px`
     wrapperStyle.overflow = 'hidden'
+    wrapperStyle.maxHeight = `${containerEl.offsetHeight}px`
     wrapperStyle.transition =
       'max-height' +
       ` var(--animated-collapse-duration-collapse, ${DEFAULT_DURATION_COLLAPSE})` +
