@@ -41,6 +41,7 @@ export default class AnimatedCollapse extends HTMLElement {
     const wrapperStyle = wrapperEl.style
 
     if (!this.expanded) {
+      wrapperStyle.overflow = 'hidden'
       wrapperStyle.maxHeight = '0px'
       wrapperStyle.visibility = 'hidden'
       wrapperEl.setAttribute('aria-hidden', 'true')
@@ -109,7 +110,6 @@ export default class AnimatedCollapse extends HTMLElement {
     this.dispatchEvent(new CustomEvent('collapsestart'))
 
     this._transitionCallback = () => {
-      wrapperStyle.overflow = ''
       wrapperStyle.visibility = 'hidden'
       wrapperStyle.transition = ''
       this._state = 'collapsed'
