@@ -70,7 +70,6 @@ export default class AnimatedCollapse extends HTMLElement {
     const containerEl = this.shadowRoot.querySelector('#container')
     const wrapperStyle = wrapperEl.style
     wrapperStyle.maxHeight = `${containerEl.offsetHeight}px`
-    wrapperStyle.overflow = 'hidden'
     wrapperStyle.visibility = ''
     wrapperStyle.transition =
       'max-height' +
