@@ -29,7 +29,7 @@ export default class AnimatedCollapse extends HTMLElement {
     this.attachShadow({
       mode: 'open',
     }).innerHTML =
-      '<style>:host{display: block}:host([hidden]){display: none}</style>' +
+      '<style>:host{display:block}:host([hidden]){display:none}</style>' +
       '<div id="wrapper"><div id="container"><slot></slot></div></div>'
 
     this._state = this.expanded ? 'expanded' : 'collapsed' // 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
