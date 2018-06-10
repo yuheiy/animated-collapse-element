@@ -24,7 +24,6 @@
 
       --focus-ring-width: 3px;
       --focus-ring-color: var(--color-blue-800);
-      --focus-ring-duration: .2s;
     }
 
     html {
@@ -44,7 +43,7 @@
     :focus {
       outline: var(--focus-ring-width) solid var(--focus-ring-color);
       outline-offset: 3px;
-      transition: outline var(--focus-ring-duration) var(--easing-standard);
+      transition: outline .1s var(--easing-standard);
     }
 
     h1,
@@ -114,7 +113,7 @@
     .collapsible-toggle:focus {
       box-shadow: 0 1px 1px 0 transparent, 0 0 0 var(--focus-ring-width) var(--focus-ring-color);
       outline: 0;
-      transition: box-shadow var(--focus-ring-duration) var(--easing-standard);
+      transition: box-shadow .2s var(--easing-standard);
     }
 
     .collapsible-toggle:active {
