@@ -42,7 +42,7 @@ export default class AnimatedCollapse extends HTMLElement {
 
     if (!this.expanded) {
       wrapperStyle.overflow = 'hidden'
-      wrapperStyle.maxHeight = '0px'
+      wrapperStyle.height = '0px'
       wrapperStyle.visibility = 'hidden'
       wrapperEl.setAttribute('aria-hidden', 'true')
     }
@@ -69,10 +69,10 @@ export default class AnimatedCollapse extends HTMLElement {
     const wrapperEl = this.shadowRoot.querySelector('#wrapper')
     const containerEl = this.shadowRoot.querySelector('#container')
     const wrapperStyle = wrapperEl.style
-    wrapperStyle.maxHeight = `${containerEl.offsetHeight}px`
+    wrapperStyle.height = `${containerEl.offsetHeight}px`
     wrapperStyle.visibility = ''
     wrapperStyle.transition =
-      'max-height' +
+      'height' +
       ` var(--animated-collapse-duration-expand, ${DEFAULT_DURATION_EXPAND})` +
       ` var(--animated-collapse-easing-expand, ${DEFAULT_EASING_EXPAND})`
     wrapperEl.removeAttribute('aria-hidden')
@@ -80,7 +80,7 @@ export default class AnimatedCollapse extends HTMLElement {
     this.dispatchEvent(new CustomEvent('expandstart'))
 
     this._transitionCallback = () => {
-      wrapperStyle.maxHeight = ''
+      wrapperStyle.height = ''
       wrapperStyle.overflow = ''
       wrapperStyle.transition = ''
       this._state = 'expanded'
@@ -97,13 +97,13 @@ export default class AnimatedCollapse extends HTMLElement {
     const containerEl = this.shadowRoot.querySelector('#container')
     const wrapperStyle = wrapperEl.style
     wrapperStyle.overflow = 'hidden'
-    wrapperStyle.maxHeight = `${containerEl.offsetHeight}px`
+    wrapperStyle.height = `${containerEl.offsetHeight}px`
     wrapperStyle.transition =
-      'max-height' +
+      'height' +
       ` var(--animated-collapse-duration-collapse, ${DEFAULT_DURATION_COLLAPSE})` +
       ` var(--animated-collapse-easing-collapse, ${DEFAULT_EASING_COLLAPSE})`
     containerEl.offsetHeight // force layout
-    wrapperStyle.maxHeight = '0px'
+    wrapperStyle.height = '0px'
     wrapperEl.setAttribute('aria-hidden', 'true')
     this._state = 'collapsing'
     this.dispatchEvent(new CustomEvent('collapsestart'))
