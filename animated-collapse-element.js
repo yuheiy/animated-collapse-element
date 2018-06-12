@@ -30,7 +30,7 @@ export default class AnimatedCollapse extends HTMLElement {
       mode: 'open',
     }).innerHTML =
       '<style>:host(:not([hidden])){display:block}</style>' +
-      '<div id="wrapper"><div id="container"><slot></slot></div></div>'
+      '<div id="wrapper"><slot></slot></div>'
 
     this._state = this.expanded ? 'expanded' : 'collapsed' // 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
     this._transitionCallback = null
@@ -38,9 +38,9 @@ export default class AnimatedCollapse extends HTMLElement {
 
   connectedCallback() {
     const wrapperEl = this.shadowRoot.querySelector('#wrapper')
-    const wrapperStyle = wrapperEl.style
 
     if (!this.expanded) {
+      const wrapperStyle = wrapperEl.style
       wrapperStyle.overflow = 'hidden'
       wrapperStyle.height = '0px'
       wrapperStyle.visibility = 'hidden'
@@ -66,9 +66,8 @@ export default class AnimatedCollapse extends HTMLElement {
     }
 
     const wrapperEl = this.shadowRoot.querySelector('#wrapper')
-    const containerEl = this.shadowRoot.querySelector('#container')
     const wrapperStyle = wrapperEl.style
-    wrapperStyle.height = `${containerEl.offsetHeight}px`
+    wrapperStyle.height = `${wrapperEl.scrollHeight}px`
     wrapperStyle.visibility = ''
     wrapperStyle.transition =
       'height' +
@@ -78,9 +77,7 @@ export default class AnimatedCollapse extends HTMLElement {
     this.dispatchEvent(new CustomEvent('expandstart'))
 
     this._transitionCallback = () => {
-      wrapperStyle.height = ''
-      wrapperStyle.overflow = ''
-      wrapperStyle.transition = ''
+      wrapperStyle.transition = wrapperStyle.overflow = wrapperStyle.height = ''
       this._state = 'expanded'
       this.dispatchEvent(new CustomEvent('expandend'))
     }
@@ -92,15 +89,14 @@ export default class AnimatedCollapse extends HTMLElement {
     }
 
     const wrapperEl = this.shadowRoot.querySelector('#wrapper')
-    const containerEl = this.shadowRoot.querySelector('#container')
     const wrapperStyle = wrapperEl.style
     wrapperStyle.overflow = 'hidden'
-    wrapperStyle.height = `${containerEl.offsetHeight}px`
+    wrapperStyle.height = `${wrapperEl.scrollHeight}px`
     wrapperStyle.transition =
       'height' +
       ` var(--animated-collapse-duration-collapse, ${DEFAULT_DURATION_COLLAPSE})` +
       ` var(--animated-collapse-easing-collapse, ${DEFAULT_EASING_COLLAPSE})`
-    containerEl.offsetHeight // force layout
+    wrapperEl.scrollHeight // force layout
     wrapperStyle.height = '0px'
     this._state = 'collapsing'
     this.dispatchEvent(new CustomEvent('collapsestart'))
