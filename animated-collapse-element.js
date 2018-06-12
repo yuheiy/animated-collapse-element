@@ -30,14 +30,14 @@ export default class AnimatedCollapse extends HTMLElement {
       mode: 'open',
     }).innerHTML =
       '<style>:host(:not([hidden])){display:block}</style>' +
-      '<div id="wrapper"><slot></slot></div>'
+      '<div><slot></slot></div>'
 
     this._state = this.expanded ? 'expanded' : 'collapsed' // 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
     this._transitionCallback = null
   }
 
   connectedCallback() {
-    const wrapperEl = this.shadowRoot.querySelector('#wrapper')
+    const wrapperEl = this.shadowRoot.lastElementChild
 
     if (!this.expanded) {
       const wrapperStyle = wrapperEl.style
@@ -65,7 +65,7 @@ export default class AnimatedCollapse extends HTMLElement {
       return
     }
 
-    const wrapperEl = this.shadowRoot.querySelector('#wrapper')
+    const wrapperEl = this.shadowRoot.lastElementChild
     const wrapperStyle = wrapperEl.style
     wrapperStyle.height = `${wrapperEl.scrollHeight}px`
     wrapperStyle.visibility = ''
@@ -88,7 +88,7 @@ export default class AnimatedCollapse extends HTMLElement {
       return
     }
 
-    const wrapperEl = this.shadowRoot.querySelector('#wrapper')
+    const wrapperEl = this.shadowRoot.lastElementChild
     const wrapperStyle = wrapperEl.style
     wrapperStyle.overflow = 'hidden'
     wrapperStyle.height = `${wrapperEl.scrollHeight}px`
