@@ -150,7 +150,10 @@
 
     customElements.define(AnimatedCollapse.is, AnimatedCollapse)
 
-    const log = document.querySelector('#events-log')
+    const output = document.querySelector('#events-output')
+    const logStatus = (message) => {
+      output.innerHTML = message
+    }
 
     document.querySelectorAll('.collapsible').forEach((root) => {
       const toggle = root.querySelector('.collapsible-toggle')
@@ -168,7 +171,7 @@
 
       ;['expandstart', 'expandend', 'collapsestart', 'collapseend'].forEach((eventType) => {
         collapse.addEventListener(eventType, () => {
-          log.innerHTML = `<code>${eventType}</code> event from "${toggle.textContent}" collapse`
+          logStatus(`<code>${eventType}</code> event from "${toggle.textContent}" collapse`)
         })
       })
     })
@@ -302,7 +305,7 @@ animatedCollapse.addEventListener(
   () => console.log('collapsing is ended')
 )</code></pre>
         <p>Received event:
-          <b id="events-log">initial</b>
+          <output id="events-output">initial</output>
         </p>
       </animated-collapse>
     </section>
