@@ -173,9 +173,13 @@
       })
 
       ;['expandstart', 'expandend', 'collapsestart', 'collapseend'].forEach((eventType) => {
-        collapse.addEventListener(eventType, () => {
-          logStatus(`<code>${eventType}</code> event from "${toggle.textContent}" collapse`)
-        })
+        collapse.addEventListener(
+          eventType,
+          logStatus.bind(
+            null,
+            `<code>${eventType}</code> event from "${toggle.textContent}" collapse`
+          )
+        )
       })
     })
   </script>
