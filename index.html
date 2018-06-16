@@ -9,21 +9,24 @@
   <link rel="canonical" href="/animated-collapse-element/">
   <style>
     :root {
-      --color-blue-600: #1e88e5;
-      --color-blue-900: #0d47a1;
-      --color-gray-50: #fafafa;
-      --color-gray-200: #eee;
-      --color-gray-300: #e0e0e0;
-      --color-gray-400: #bdbdbd;
-      --color-white: #fff;
+      --color-blue-900: hsl(216, 85%, 34%);
+      --color-gray-50: hsl(0, 0%, 98%);
+      --color-gray-200: hsl(0, 0%, 93%);
+      --color-gray-300: hsl(0, 0%, 88%);
+      --color-gray-400: hsl(0, 0%, 74%);
+      --color-white: hsl(0, 0%, 100%);
+
+      --color-text-emphasis: hsla(0, 0%, 0%, .87); /* black */
+      --color-text-link: var(--color-blue-900);
+      --color-text-link-underline: hsla(216, 85%, 34%, .6); /* blue 900 */
+      --color-focus-ring: hsla(208, 79%, 51%, .87); /* blue 600 */
 
       --font-stack-system-ui: system-ui, sans-serif;
       --font-stack-monospace: "Menlo", "Consolas", monospace;
 
-      --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
-
       --focus-ring-width: 3px;
-      --focus-ring-color: var(--color-blue-600);
+
+      --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     html {
@@ -36,12 +39,12 @@
       margin: 0 auto;
       padding-right: 1rem;
       padding-left: 1rem;
-      color: hsla(0, 0%, 0%, .87);
+      color: var(--color-text-emphasis);
       background-color: var(--color-gray-50);
     }
 
     :focus {
-      outline: var(--focus-ring-width) solid var(--focus-ring-color);
+      outline: var(--focus-ring-width) solid var(--color-focus-ring);
       outline-offset: 3px;
       transition: outline .1s var(--easing-standard);
     }
@@ -68,8 +71,8 @@
     }
 
     a {
-      color: var(--color-blue-900);
-      text-decoration-color: hsla(216, 85%, 34%, .6); /* --color-blue-900 */
+      color: var(--color-text-link);
+      text-decoration-color: var(--color-text-link-underline);
       text-underline-position: under;
     }
 
@@ -111,7 +114,7 @@
     }
 
     .collapsible-toggle:focus {
-      box-shadow: 0 0 0 var(--focus-ring-width) var(--focus-ring-color), 0 1px 1px 0 hsla(0, 0%, 0%, .2);
+      box-shadow: 0 0 0 var(--focus-ring-width) var(--color-focus-ring), 0 1px 1px 0 hsla(0, 0%, 0%, .2);
       outline: 0;
       transition: box-shadow .2s var(--easing-standard);
     }
