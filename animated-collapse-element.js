@@ -33,7 +33,6 @@ export default class AnimatedCollapse extends HTMLElement {
       '<div><slot></slot></div>'
 
     this._state = this.expanded ? 'expanded' : 'collapsed' // 'expanding' | 'expanded' | 'collapsing' | 'collapsed'
-    this._transitionCallback = null
   }
 
   connectedCallback() {
@@ -75,12 +74,6 @@ export default class AnimatedCollapse extends HTMLElement {
       ` var(--animated-collapse-easing-expand, ${DEFAULT_EASING_EXPAND})`
     this._state = 'expanding'
     this.dispatchEvent(new CustomEvent('expandstart'))
-
-    this._transitionCallback = () => {
-      wrapperStyle.transition = wrapperStyle.overflow = wrapperStyle.height = ''
-      this._state = 'expanded'
-      this.dispatchEvent(new CustomEvent('expandend'))
-    }
   }
 
   _collapse() {
@@ -100,19 +93,37 @@ export default class AnimatedCollapse extends HTMLElement {
     wrapperStyle.height = '0px'
     this._state = 'collapsing'
     this.dispatchEvent(new CustomEvent('collapsestart'))
-
-    this._transitionCallback = () => {
-      wrapperStyle.visibility = 'hidden'
-      wrapperStyle.transition = ''
-      this._state = 'collapsed'
-      this.dispatchEvent(new CustomEvent('collapseend'))
-    }
   }
 
   _onTransitionEnd() {
-    if (this._transitionCallback) {
-      this._transitionCallback()
-      this._transitionCallback = null
+    switch (this._state) {
+      case 'expanding': {
+        const wrapperStyle = this.shadowRoot.lastElementChild.style
+        wrapperStyle.transition = wrapperStyle.overflow = wrapperStyle.height =
+          ''
+        this._state = 'expanded'
+        this.dispatchEvent(new CustomEvent('expandend'))
+        break
+      }
+
+      case 'expanded': {
+        // noop
+        break
+      }
+
+      case 'collapsing': {
+        const wrapperStyle = this.shadowRoot.lastElementChild.style
+        wrapperStyle.visibility = 'hidden'
+        wrapperStyle.transition = ''
+        this._state = 'collapsed'
+        this.dispatchEvent(new CustomEvent('collapseend'))
+        break
+      }
+
+      case 'collapsed': {
+        // noop
+        break
+      }
     }
   }
 }
